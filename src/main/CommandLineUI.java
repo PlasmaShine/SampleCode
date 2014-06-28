@@ -36,7 +36,7 @@ public class CommandLineUI implements UI {
 			inputString = retrieveInput();
 			Location playerLocation = parseInput(inputString);
 			if (playerLocation!=null) {
-				if (game.placeStoneAtLocationForPlayer(playerLocation.x, playerLocation.y, Player.HUMAN))
+				if (game.placeStoneAtLocationForPlayer(playerLocation, Player.HUMAN))
 					game.playComputer();
 				else
 					System.out.println("Cannot place stone there");						

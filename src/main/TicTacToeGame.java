@@ -44,6 +44,11 @@ public class TicTacToeGame implements Game {
 	}
 
 	@Override
+	public boolean placeStoneAtLocationForPlayer(Location location, Player player) {
+		return placeStoneAtLocationForPlayer(location.x, location.y, player);
+	}
+
+	@Override
 	public boolean placeStoneAtLocationForPlayer(int x, int y, Player player) {
 		if(this.isGameOver || !isValidLocation(x, y)) return false;
 		this.currentPlayer = player;
@@ -97,19 +102,20 @@ public class TicTacToeGame implements Game {
 	}
 
 	@Override
-	public Player ownerOfStoneAtLocation(int x, int y) {
-		return board.get(x-1).get(y-1);
+	public Player ownerOfStoneAtLocation(Location location) {
+		return ownerOfStoneAtLocation(location.x, location.y);
 	}
 
-	private Player ownerOfStoneAtLocation(Location location) {
-		return ownerOfStoneAtLocation(location.x, location.y);
+	@Override
+	public Player ownerOfStoneAtLocation(int x, int y) {
+		return board.get(x-1).get(y-1);
 	}
 
 	@Override
 	public Location playComputer() {
 		if (this.isGameOver) return null;
 		Location location = selectLocationToPlaceStone();
-		placeStoneAtLocationForPlayer(location.x, location.y, Player.COMPUTER);
+		placeStoneAtLocationForPlayer(location, Player.COMPUTER);
 		return location;
 	}
 	

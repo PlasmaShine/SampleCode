@@ -74,49 +74,58 @@ public class TestGame {
 	public void testGameStartsWithAnEmptyBoard() {
 		for(int i=1; i<=3; i++)
 			for (int j=1;j<=3; j++)
-				assertEquals("Board should be empty", game.ownerOfStoneAtLocation(i, j), Player.NONE);
+				assertEquals("Board should be empty", 
+						game.ownerOfStoneAtLocation(i, j), Player.NONE);
 	}
 
 	@Test
 	public void testHumanCanPlaceStoneOnBoard() {
-		assertTrue("Should have been able to place stone at location 3, 3", game.placeStoneAtLocationForPlayer(3,3, Player.HUMAN));
-		assertTrue("The stone owner should have been HUMAN", game.ownerOfStoneAtLocation(3,3)==Game.Player.HUMAN);
+		assertTrue("Should have been able to place stone at location 3, 3", 
+				game.placeStoneAtLocationForPlayer(3,3, Player.HUMAN));
+		assertTrue("The stone owner should have been HUMAN", 
+				game.ownerOfStoneAtLocation(3,3)==Game.Player.HUMAN);
 	}
 	
 	@Test
 	public void testHumanCannotPlaceTwoStonesOnTheSameLocation() {
 		game.placeStoneAtLocationForPlayer(1,1, Player.HUMAN);
-		assertFalse("Should not be able to place two stones on the same location", game.placeStoneAtLocationForPlayer(1, 1, Player.HUMAN));
+		assertFalse("Should not be able to place two stones on the same location", 
+				game.placeStoneAtLocationForPlayer(1, 1, Player.HUMAN));
 	}	
 
 	@Test
 	public void testHumanCannotPlaceStonesOffBoardI() {
-		assertFalse("Should not be able to place a stones off-board", game.placeStoneAtLocationForPlayer(0, 0, Player.HUMAN));
+		assertFalse("Should not be able to place a stones off-board", 
+				game.placeStoneAtLocationForPlayer(0, 0, Player.HUMAN));
 	}	
 
 	@Test
 	public void testHumanCannotPlaceStonesOffBoardII() {
-		assertFalse("Should not be able to place a stones off-board", game.placeStoneAtLocationForPlayer(4, 4, Player.HUMAN));
+		assertFalse("Should not be able to place a stones off-board", 
+				game.placeStoneAtLocationForPlayer(4, 4, Player.HUMAN));
 	}	
 
 	@Test
 	public void testComputerCanPlaceStoneOnBoard() {
 		Location location = game.playComputer();
 		assertLocationIsOnBoard(location);
-		assertTrue("The stone owner should have been COMPUTER", game.ownerOfStoneAtLocation(location.x, location.y)==Game.Player.COMPUTER);
+		assertTrue("The stone owner should have been COMPUTER", 
+				game.ownerOfStoneAtLocation(location)==Game.Player.COMPUTER);
 	}
 	
 	@Test
 	public void testComputerStartsAtTheMiddleOfTheBoard() {
 		Location location = game.playComputer();
-		assertTrue("Computer should have started in the middle of the board", location.equals(new Location(2,2)));
+		assertTrue("Computer should have started in the middle of the board", 
+				location.equals(new Location(2,2)));
 	}
 	
 	@Test
 	public void testIfMiddleOfBoardNotAvailableStartSomewhereOnTheSide() {
 		game.placeStoneAtLocationForPlayer(2, 2, Player.HUMAN);
 		Location location = game.playComputer();
-		assertTrue("Computer should have started on the side of the board", !location.equals(new Location(2,2)));
+		assertTrue("Computer should have started on the side of the board", 
+				!location.equals(new Location(2,2)));
 	}
 	
 	@Test
@@ -178,8 +187,10 @@ public class TestGame {
 	@Test
 	public void testCannotPlaceStonesAfterGameIsOver() {
 		placeFollowingNumberOfItemsInRowForPlayer(3, 1, Player.HUMAN);
-		assertFalse("Should not be able to place stones after game is over", game.placeStoneAtLocationForPlayer(1, 2, Player.HUMAN));
-		assertNull("Should not be able to place stones after game is over", game.playComputer());
+		assertFalse("Should not be able to place stones after game is over", 
+				game.placeStoneAtLocationForPlayer(1, 2, Player.HUMAN));
+		assertNull("Should not be able to place stones after game is over", 
+				game.playComputer());
 	}
 
 	@Test
@@ -203,7 +214,8 @@ public class TestGame {
 		placeFollowingNumberOfItemsInRowForPlayer(2, 2, Player.COMPUTER);
 		placeFollowingNumberOfItemsInColumnForPlayer(2, 3, Player.HUMAN);
 		game.playComputer();
-		assertTrue("Computer should have blocked", game.ownerOfStoneAtLocation(3,3) == Player.COMPUTER);
+		assertTrue("Computer should have blocked", 
+				game.ownerOfStoneAtLocation(3,3) == Player.COMPUTER);
 		assertFalse("Game should not be over", game.isGameOver());
 	}
 	
@@ -214,8 +226,10 @@ public class TestGame {
 		game.placeStoneAtLocationForPlayer(3, 3, Player.HUMAN);
 		Location placedLocation = game.playComputer();
 		assertTrue("Computer should have placed stone on one of the sides but not the corner", 
-				!placedLocation.equals(new Location(1, 1)) && !placedLocation.equals(new Location(3, 1)) &&
-				!placedLocation.equals(new Location(1, 3)) && !placedLocation.equals(new Location(3, 3)));
+				!placedLocation.equals(new Location(1, 1)) && 
+				!placedLocation.equals(new Location(3, 1)) &&
+				!placedLocation.equals(new Location(1, 3)) && 
+				!placedLocation.equals(new Location(3, 3)));
 	}
 
 	@Test
@@ -225,15 +239,18 @@ public class TestGame {
 		game.placeStoneAtLocationForPlayer(1, 3, Player.HUMAN);
 		Location placedLocation = game.playComputer();
 		assertTrue("Computer should have placed stone on one of the sides but not the corner", 
-				!placedLocation.equals(new Location(1, 1)) && !placedLocation.equals(new Location(3, 1)) &&
-				!placedLocation.equals(new Location(1, 3)) && !placedLocation.equals(new Location(3, 3)));
+				!placedLocation.equals(new Location(1, 1)) && 
+				!placedLocation.equals(new Location(3, 1)) &&
+				!placedLocation.equals(new Location(1, 3)) && 
+				!placedLocation.equals(new Location(3, 3)));
 	}
 
 	@Test
 	public void testDrawGame() {
 		createDrawGameLayout();
 		game.playComputer();
-		assertTrue("Computer should filled the last empty place", game.ownerOfStoneAtLocation(2, 1)==Player.COMPUTER);
+		assertTrue("Computer should filled the last empty place", 
+				game.ownerOfStoneAtLocation(2, 1)==Player.COMPUTER);
 		assertDraw();
 	}
 

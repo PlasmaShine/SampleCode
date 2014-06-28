@@ -10,7 +10,9 @@ public interface Game {
 	}
 	
 	public void reset();
+	public boolean placeStoneAtLocationForPlayer(Location location, Player player);
 	public boolean placeStoneAtLocationForPlayer(int x, int y, Player player);
+	public Player ownerOfStoneAtLocation(Location location);
 	public Player ownerOfStoneAtLocation(int x, int y);
 	public int getNumberOfStonesOnBoard();
 	public Location playComputer();
