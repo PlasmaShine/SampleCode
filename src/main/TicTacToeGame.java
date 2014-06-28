@@ -20,7 +20,12 @@ public class TicTacToeGame implements Game {
 			{new Location(1, 1), new Location(2, 2), new Location(3, 3)},
 			{new Location(1, 3), new Location(2, 2), new Location(3, 1)}
 	};
-		
+	
+	private Location[] locationPrioritylist = {	
+			new Location(2, 2), new Location(2, 1), new Location(1, 2),
+			new Location(2, 3), new Location(3, 2), new Location(1, 1),
+			new Location(3, 1), new Location(3, 3), new Location(1, 3)};
+	
 	public TicTacToeGame() {
 		initBoard();
 	}
@@ -126,11 +131,6 @@ public class TicTacToeGame implements Game {
 		Location humanWinningLocation = getLocationForAWinningCombinationForPlayer(Player.HUMAN);
 		if (humanWinningLocation != null) 
 			return humanWinningLocation;
-		Location boardCenter = new Location(2, 2);
-		if (isAbleToPlaceStoneAtLocation(boardCenter))
-			return boardCenter;
-		else if (triangleOfDeathDetected())
-			return getSideLocationThatIsNotCorner();
 		else
 			return getFirstEmptyLocation();
 	}
@@ -165,34 +165,11 @@ public class TicTacToeGame implements Game {
 		return ownerOfStoneAtLocation(location) != Player.NONE && 
 			   ownerOfStoneAtLocation(location) != player;
 	}
-	
-	private boolean triangleOfDeathDetected() {
-		return numberOfStonesOnBoard==3 &&
-			   (ownerOfStoneAtLocation(1,1) == Player.HUMAN &&
-				ownerOfStoneAtLocation(3,1) == Player.HUMAN) ||
-			   (ownerOfStoneAtLocation(3,1) == Player.HUMAN &&
-				ownerOfStoneAtLocation(1,3) == Player.HUMAN);				   
-	}
-	
-	private Location getSideLocationThatIsNotCorner() {
-		Location sideLocation = new Location(2, 1);
-		if (isAbleToPlaceStoneAtLocation(sideLocation)) 
-			return sideLocation;
-		sideLocation = new Location(1, 2);
-		if (isAbleToPlaceStoneAtLocation(sideLocation)) 
-			return sideLocation;
-		sideLocation = new Location(3, 2);
-		if (isAbleToPlaceStoneAtLocation(sideLocation)) 
-			return sideLocation;
-		sideLocation = new Location(2, 3);
-		return sideLocation;
-	}
-	
+		
 	private Location getFirstEmptyLocation() {
-		for (int i=1;i<=BOARD_SIZE;i++)
-			for (int j=1; j<=BOARD_SIZE; j++) {
-				Location location = new Location(i,j);
-				if (ownerOfStoneAtLocation(location)==Player.NONE)
+		for (int i=0;i<=locationPrioritylist.length;i++) {
+				Location location = locationPrioritylist[i];
+				if (isAbleToPlaceStoneAtLocation(location))
 					return location;
 			}
 		return null;
